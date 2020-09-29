@@ -24,20 +24,43 @@
       <div class="col-md-2">
         <div class="well">
           <h5>Test Subject ID No.:</h5>
-          <select id="selDataset" onchange="optionChanged(this.value)"></select>
+          <select id="selDataset" onchange="optionChanged(this.value)">
+            <option></option>            
+          </select>
         </div>
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Demographic Info</h3>
           </div>
-          <div id="sample-metadata" class="panel-body"></div>
+          <div id="sample-metadata" class="panel-body">
+            <!-- table with metadata -->
+            <div class="col-md-10">
+              <div id="table-area" class="">
+                <table id="metadata-table" class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th class="table-head">Age</th>
+                      <th class="table-head">BB Type</th>
+                      <th class="table-head">Ethnicity</th>
+                      <th class="table-head">Gender</th>
+                      <th class="table-head">ID</th>
+                      <th class="table-head">Location</th>
+                      <th class="table-head">WFReq</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              </div>
+          </div>
         </div>
       </div>
+      <div class="col-md-10">
 
       <div id="plot"></div>
       <script src="plots.js"></script>
-
-
+      </div>
+    </div>
 
       <div class="col-md-5">
         <div id="bar"></div>
