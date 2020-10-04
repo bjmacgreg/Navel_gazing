@@ -112,18 +112,28 @@ function updatePage() {
     var chartData = [trace1];
 
   // Apply the group bar mode to the layout
-    var layout = {
+    var barlayout = {
       title: "Lint",
       margin: {
         l: 100,
         r: 100,
         t: 100,
-        b: 100
+        b: 100,
+        xaxis: {title: "TITLEx", titlefont: {
+          //family: 'Arial, sans-serif',
+          size: 18,
+          color: 'black'
+        }},
+        yaxis: {title: "TITLEy"}, titlefont: {
+          //family: 'Arial, sans-serif',
+          size: 18,
+          color: 'black'
+        } 
       }   
     };
 
   // Render the plot to the div tag with id "bar"
-   Plotly.newPlot("bar", chartData, layout);
+   Plotly.newPlot("bar", chartData, barlayout);
   
 
   //BUBBLE CHART
@@ -144,14 +154,23 @@ function updatePage() {
   
   var bubbledata = [trace1];
   
-  var layout = {
+  var bubblelayout = {
     title: 'Bubble Chart Hover Text',
     showlegend: false,
     height: 600,
-    width: 600
-  };
+    width: 600,
+    xaxis: {title: "OTU ID", titlefont: {
+      family: 'Arial, sans-serif',
+      size: 18,
+      color: 'black'
+    }},
+    yaxis: {title: "Sample value"}, titlefont: {
+      family: 'Arial, sans-serif',
+      size: 18,
+      color: 'black'
+  }};
   
-  Plotly.newPlot('bubble', bubbledata, layout);
+  Plotly.newPlot('bubble', bubbledata, bubblelayout);
 
   //GAUGE 
 
@@ -171,7 +190,7 @@ function updatePage() {
     
   ];
   
-  var washlayout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
+  var washlayout = { width: 600, height: 450, margin: { t: 0, b: 0 }};
   Plotly.newPlot('gauge', washdata, washlayout);
 
 };  
