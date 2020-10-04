@@ -103,9 +103,6 @@ function updatePage() {
       x: graphDataArray.slice(0,10).map(row => row[0]),
       y: graphDataArray.slice(0,10).map(row => row[1]),
       text: graphDataArray.slice(0,10).map(row => row[2]),
-      // x: currentOTUData.map(row => row.sample_values),
-      // y: currentOTUData.map(row => row.otu_ids),
-      // text: currentOTUData.map(row => row.otu_labels),
       name: "Lint",
       type: "bar",
       orientation: "h"
@@ -122,8 +119,7 @@ function updatePage() {
         r: 100,
         t: 100,
         b: 100
-      }
-    
+      }   
     };
 
   // Render the plot to the div tag with id "bar"
@@ -131,22 +127,18 @@ function updatePage() {
   
 
   //BUBBLE CHART
-  var graphDataArray = d3.zip(graphData.sample_values, graphData.otu_ids, graphData.otu_labels);
-
-  // var currentOTUData = data.samples.filter(function(d) { return d.id == currentSubject; });
-  // console.log(currentOTUData);
-
-  //Sizes etc.: see https://plotly.com/javascript/bubble-maps/
+  var size = graphDataArray.map(row => row[0]);
+  var color = graphDataArray.map(row => row[1]);
   
   var trace1 = {
-    x: graphDataArray.map(row => row[0]), 
-    y: graphDataArray.map(row => row[1]),
+    x: graphDataArray.map(row => row[1]), 
+    y: graphDataArray.map(row => row[0]),
     text: graphDataArray.map(row => row[2]),
     mode: 'markers',
     marker: {
-      color:graphDataArray.map(row => row[0]),
-      size: graphDataArray.map(row => row[1]).value,
-      colorscale: 'Greens'
+      color:color,
+      size: size,
+      colorscale: 'viridis'
     }
   };
   
@@ -160,52 +152,33 @@ function updatePage() {
   };
   
   Plotly.newPlot('bubble', bubbledata, layout);
+
+  //GAUGE 
+
+  washfreq = currentDemoData[0].wfreq;
+  var washdata = [
+    {
+      domain: { x: [0, 1], y: [0, 1] },
+      value: washfreq,
+      title: { text: "Washing frequency" },
+      type: "indicator",
+      mode: "gauge+number",
+      delta: { reference: 380 },
+      gauge: {
+        axis: { range: [null, 9] }
+        }
+      }
+    
+  ];
   
-  
-  
+  var washlayout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
+  Plotly.newPlot('gauge', washdata, washlayout);
+
 };  
-  
-  
-  //function wheel ();
-
-
-
-
 
 // EVENT HANDLER
 d3.selectAll("body").on("change", updatePage);
 });
-
-
-
-
-
-
-
-
-
-// var trace1 = {
-//   x: [1, 2, 3, 4],
-//   y: [10, 11, 12, 13],
-//   text: ['A<br>size: 40', 'B<br>size: 60', 'C<br>size: 80', 'D<br>size: 100'],
-//   mode: 'markers',
-//   marker: {
-//     color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
-//     size: [40, 60, 80, 100]
-//   }
-// };
-
-// var data = [trace1];
-
-// var layout = {
-//   title: 'Bubble Chart Hover Text',
-//   showlegend: false,
-//   height: 600,
-//   width: 600
-// };
-
-// Plotly.newPlot('myDiv', data, layout);
-
 
 
 
