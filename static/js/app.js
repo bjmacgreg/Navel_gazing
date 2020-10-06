@@ -241,6 +241,7 @@ function fillOverviewTable(x) {
 tableData = data.metadata;
 fillOverviewTable(data.metadata);
 console.log(tableData);
+
 //Filter button event handler
 filterbutton.on("click", function() {
   //collect inputs
@@ -248,8 +249,6 @@ filterbutton.on("click", function() {
   idInput =+ idInput;
   ethnicityInput = d3.select("#ethnicity-input").property ("value"); 
   genderInput = d3.select("#gender-input").property ("value"); 
-  ageInput = d3.select("#age-input").property ("value");
-  ageInput =+ ageInput;
   locationInput = d3.select("#location-input").property ("value"); 
   bellybuttonInput = d3.select("#bellybutton-input").property ("value"); 
   washInput = d3.select("#wash-input").property ("value");
@@ -258,31 +257,48 @@ filterbutton.on("click", function() {
   //filter data
   if (idInput) {selectedData1 = tableData.filter(tableData => (tableData.id === idInput))}
   else {selectedData1 = tableData};
-  console.log(selectedData1);
   if (ethnicityInput) {selectedData2 = selectedData1.filter(selectedData1 => (selectedData1.ethnicity === ethnicityInput))}
   else {selectedData2 = selectedData1}; 
-  console.log(selectedData2);
   if (genderInput) {selectedData3 = selectedData2.filter(selectedData2 => (selectedData2.gender === genderInput))}
   else {selectedData3 = selectedData2};
-  console.log(selectedData3);
-  if (ageInput) {selectedData4 = selectedData3.filter(selectedData3 => (selectedData3.age === ageInput))}
-  else {selectedData4 = selectedData3};
-  console.log(selectedData4);
-  if (locationInput) {selectedData5 = selectedData4.filter(selectedData4 => (selectedData4.location === locationInput))}
-  else {selectedData5 = selectedData4};
-  console.log(selectedData5);
-  if (bellybuttonInput) {selectedData6 = selectedData5.filter(selectedData5 => (selectedData5.bellybutton === bellybuttonInput))}
-  else {selectedData6 = selectedData5};
-  console.log(selectedData6);
-  if (washInput) {selectedData7 = selectedData6.filter(selectedData6 => (selectedData6.wfreq === washInput))}
-  else {selectedData7 = selectedData6};
-  console.log(selectedData7);
 
+  if (d3.select("#cohortone-input").property("checked")) {selectedData4 = selectedData3}
+  else {selectedData4 = selectedData3.filter(selectedData3 => (selectedData3.age >= 10))};
+  if (d3.select("#cohorttwo-input").property("checked")) {selectedData5 = selectedData4}
+  else {selectedData5 = selectedData4.filter(selectedData4 => (selectedData4.age >= 20 || selectedData4.age < 10))};
+  if (d3.select("#cohortthree-input").property("checked")) {selectedData6 = selectedData5}
+  else {selectedData6 = selectedData5.filter(selectedData5 => (selectedData5.age >= 30 || selectedData5.age < 20))};
+  if (d3.select("#cohortfour-input").property("checked")) {selectedData7 = selectedData6}
+  else {selectedData7 = selectedData6.filter(selectedData6 => (selectedData6.age >= 40 || selectedData6.age < 30))};
+  if (d3.select("#cohortfive-input").property("checked")) {selectedData8 = selectedData7}
+  else {selectedData8 = selectedData7.filter(selectedData7 => (selectedData7.age >= 50 || selectedData7.age < 40))};
+  if (d3.select("#cohortsix-input").property("checked")) {selectedData9 = selectedData8}
+  else {selectedData9 = selectedData8.filter(selectedData8 => (selectedData8.age >= 60 || selectedData8.age < 50))};
+  if (d3.select("#cohortseven-input").property("checked")) {selectedData10 = selectedData9} 
+  else {selectedData10 = selectedData9.filter(selectedData9 => (selectedData9.age < 60))};
+
+  if (locationInput) {selectedData11 = selectedData10.filter(selectedData10 => (selectedData10.location === locationInput))}
+  else {selectedData11 = selectedData10};
+  if (bellybuttonInput) {selectedData12 = selectedData11.filter(selectedData11 => (selectedData11.bellybutton === bellybuttonInput))}
+  else {selectedData12 = selectedData11};
+  if (washInput) {selectedData13 = selectedData12.filter(selectedData12 => (selectedData12.wfreq === washInput))}
+  else {selectedData13 = selectedData12};
+  selectedIDs = [];
+  console.log(selectedData13);
+  selectedData13.forEach(element => console.log(element.id));
+  selectedData13.forEach(element => selectedIDs.append[element.id]);
+  console.log(selectedIDs);
 //display final selection in table
-  fillOverviewTable(selectedData7)});
+  fillOverviewTable(selectedData13)});
 
 
+  
+  // selectedIDs = selectedData13.id;
+  // console.log(selectedIDs);
 
+// collect ID numbers for final selection
+  // selectedSubjects = [];
+  // selectedData13.forEach(selectedData13 => console.log(selectedData13.id));
 
 // EVENT HANDLER
 d3.selectAll("body").on("change", updatePage);
