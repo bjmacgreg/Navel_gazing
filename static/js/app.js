@@ -50,13 +50,6 @@ var uniqueOTULabels = uniq3.sort(d3.ascending);
 console.log(uniqueOTULabels);
 console.log(`The number of different OTU labels is ` + uniqueOTULabels.length);
 
-
-
-
-
-
-
-
 //ADD NAMES TO BUTTON
 d3.select("#selDataset")
   .selectAll('myOptions')
@@ -104,7 +97,7 @@ function barChart(currentOTUData) {
       x: graphDataArray.slice(0,10).map(row => row[0]),
       y: graphDataArray.slice(0,10).map(row => row[1]),
       text: graphDataArray.slice(0,10).map(row => row[2]),
-      name: "Lint",
+      name: "OTU Abundance",
       type: "bar",
       orientation: "h"
     };
@@ -112,7 +105,7 @@ function barChart(currentOTUData) {
 
   // Specify layout
     var barlayout = {
-      title: "Lint",
+      title: "OTU Abundance",
       margin: {
         l: 100,
         r: 100,
@@ -283,22 +276,19 @@ filterbutton.on("click", function() {
   else {selectedData12 = selectedData11};
   if (washInput) {selectedData13 = selectedData12.filter(selectedData12 => (selectedData12.wfreq === washInput))}
   else {selectedData13 = selectedData12};
+
+  //Collect id numbers for selected subjects and print to html
+
   selectedIDs = [];
-  console.log(selectedData13);
-  selectedData13.forEach(element => console.log(element.id));
-  selectedData13.forEach(element => selectedIDs.append[element.id]);
-  console.log(selectedIDs);
-//display final selection in table
+  selectedData13.forEach(element => selectedIDs.push(element.id));
+  var temp = "";
+  for(var i= 0; i < selectedIDs.length; i++) {
+    temp += selectedIDs[i]+ "<br>";
+  };
+  document.getElementById("selectedIDs").innerHTML = temp;
+
+  //display final selection in table
   fillOverviewTable(selectedData13)});
-
-
-  
-  // selectedIDs = selectedData13.id;
-  // console.log(selectedIDs);
-
-// collect ID numbers for final selection
-  // selectedSubjects = [];
-  // selectedData13.forEach(selectedData13 => console.log(selectedData13.id));
 
 // EVENT HANDLER
 d3.selectAll("body").on("change", updatePage);
